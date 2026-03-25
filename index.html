@@ -3,158 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社内ポータル App</title>
+    <title>K-GATE Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .page { display: none; min-height: 100vh; }
         .page.active { display: block; }
         .nav-item.active { color: #3b82f6; font-weight: bold; }
-        /* スムーズな切り替え用 */
         body { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-gray-100 font-sans pb-24">
 
-    <div id="home" class="page active">
-        <header class="p-6 flex justify-between items-start">
-            <h1 class="text-3xl font-bold text-gray-800">トップページ</h1>
-            <span class="text-sm text-gray-500">14:16</span>
-        </header>
-        <main class="px-4 space-y-4">
-            <section class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="bg-blue-100 text-blue-500 rounded-full px-2 text-xs font-bold">i</span>
-                    <h2 class="font-bold text-gray-700">連絡</h2>
-                </div>
-                <p class="text-sm text-gray-600">今月の売上目標達成率 72%（毎朝更新）残り 6営業日！チームプレーで頑張りましょう！</p>
-            </section>
-
-            <section class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <div class="flex justify-between items-center mb-4 text-sm font-bold">
-                    <span>📅 8月28日 水曜日</span>
-                    <button class="text-blue-500 text-xs">週表示</button>
-                </div>
-                <div class="space-y-3">
-                    <div class="border-l-4 border-green-400 pl-3 flex justify-between items-center">
-                        <div class="text-[10px] text-gray-400 w-16">9:00 - 9:30<br><span class="bg-green-100 text-green-600 px-1 rounded">タスク</span></div>
-                        <div class="text-sm font-medium flex-1 pl-2">メッセージチェック</div>
-                        <i class="fa-solid fa-arrows-rotate text-gray-300 text-xs"></i>
-                    </div>
-                    <div class="border-l-4 border-pink-300 pl-3 flex justify-between items-center">
-                        <div class="text-[10px] text-gray-400 w-16">11:00 - 12:00<br><span class="bg-pink-100 text-pink-600 px-1 rounded">往訪</span></div>
-                        <div class="text-sm font-medium text-blue-600 underline flex-1 pl-2">山本海運様</div>
-                        <i class="fa-solid fa-arrows-rotate text-gray-300 text-xs"></i>
-                    </div>
-                </div>
-            </section>
-
-            <section class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="text-yellow-400 text-lg">🔔</span>
-                    <h2 class="font-bold text-gray-700">お知らせ</h2>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <div><p class="text-[10px] text-gray-400">ワークフロー</p><p class="text-sm font-medium">申請結果</p></div>
-                        <span class="text-sm font-bold">10件</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div><p class="text-[10px] text-gray-400">共有タスク管理</p><p class="text-sm font-medium">未処理のタスク</p></div>
-                        <span class="text-sm font-bold">1件</span>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <div id="login-page" class="page active flex flex-col items-center justify-center px-6">
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-xl w-full max-w-sm text-center">
+            <h1 class="text-3xl font-bold mb-8 text-gray-800">K-GATE</h1>
+            <div class="space-y-4">
+                <input id="login-email" type="email" placeholder="メールアドレス" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500">
+                <input id="login-pass" type="password" placeholder="パスワード" class="w-full p-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500">
+                <button onclick="mailLogin()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-blue-700 transition">ログイン</button>
+                <button onclick="googleLogin()" class="w-full bg-white text-gray-700 py-4 rounded-2xl font-bold shadow-sm border border-gray-200 flex items-center justify-center gap-2 mt-4">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="18"> Googleでログイン
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="notif" class="page">
-        <header class="p-6"><h1 class="text-3xl font-bold text-gray-800">通知</h1></header>
-        <main class="px-4 space-y-3">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border flex items-center gap-4">
-                <div class="w-10 h-10 bg-red-100 text-red-500 rounded-full flex items-center justify-center">🔔</div>
-                <div class="flex-1"><p class="text-sm font-bold">ワークフロー承認依頼</p><p class="text-xs text-gray-500">2時間前</p></div>
-            </div>
-            <div class="bg-white p-4 rounded-2xl shadow-sm border flex items-center gap-4 text-gray-400">
-                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">💬</div>
-                <div class="flex-1"><p class="text-sm font-bold text-gray-500">既読のメッセージ</p><p class="text-xs">昨日 18:30</p></div>
-            </div>
-        </main>
-    </div>
+    <div id="main-content" class="hidden">
+        
+        <div id="home" class="page active">
+            <header class="p-6 flex justify-between items-start">
+                <h1 class="text-3xl font-bold text-gray-800">トップページ</h1>
+                <span class="text-sm text-gray-400" id="current-time">14:16</span>
+            </header>
+            <main class="px-4 space-y-4">
+                <section class="bg-white rounded-[1.5rem] p-5 shadow-sm border border-gray-50">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-blue-100 text-blue-500 rounded-full px-2 text-[10px] font-bold">i</span>
+                        <h2 class="font-bold text-gray-700 text-sm">連絡</h2>
+                    </div>
+                    <p id="top-info" class="text-sm text-gray-600">読み込み中...</p>
+                </section>
 
-    <div id="apps" class="page">
-        <header class="p-6"><h1 class="text-3xl font-bold text-gray-800">アプリケーション</h1></header>
-        <main class="px-6 grid grid-cols-3 gap-y-8 gap-x-4 text-center">
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📅</div><span class="text-[10px]">スケジュール</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">🏢</div><span class="text-[10px]">施設予約</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📞</div><span class="text-[10px]">電話メモ</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📋</div><span class="text-[10px]">掲示板</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">💬</div><span class="text-[10px]">メッセージ</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">✉️</div><span class="text-[10px]">メール</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">✍️</div><span class="text-[10px]">ワークフロー</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📁</div><span class="text-[10px]">ファイル管理</span></div>
-            <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">⌚</div><span class="text-[10px]">タイムカード</span></div>
-        </main>
-    </div>
+                <section class="bg-white rounded-[1.5rem] p-5 shadow-sm border border-gray-50">
+                    <div class="flex justify-between items-center mb-4 text-sm font-bold text-gray-700">
+                        <span>📅 8月28日 水曜日</span>
+                        <button class="text-blue-500 text-xs">週表示</button>
+                    </div>
+                    <div id="schedule-list" class="space-y-4"></div>
+                </section>
 
-    <div id="admin" class="page">
-        <header class="p-6"><h1 class="text-3xl font-bold text-gray-800">管理者設定</h1></header>
-        <main class="px-4 space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border">
-                <h2 class="font-bold mb-4 text-blue-600">👤 ユーザー追加</h2>
-                <div class="space-y-4 text-sm">
-                    <input type="text" placeholder="名前" class="w-full border p-3 rounded-xl bg-gray-50">
-                    <input type="email" placeholder="メール" class="w-full border p-3 rounded-xl bg-gray-50">
-                    <button class="w-full bg-blue-500 text-white py-3 rounded-xl font-bold">追加する</button>
+                <section class="bg-white rounded-[1.5rem] p-5 shadow-sm border border-gray-50">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-yellow-400 text-lg">🔔</span>
+                        <h2 class="font-bold text-gray-700 text-sm">お知らせ</h2>
+                    </div>
+                    <div id="notice-summary" class="space-y-4"></div>
+                </section>
+            </main>
+        </div>
+
+        <div id="notif" class="page">
+            <header class="p-6"><h1 class="text-3xl font-bold text-gray-800">通知</h1></header>
+            <main id="notif-list" class="px-4 space-y-3"></main>
+        </div>
+
+        <div id="apps" class="page">
+            <header class="p-6"><h1 class="text-3xl font-bold text-gray-800">アプリ</h1></header>
+            <main class="px-6 grid grid-cols-3 gap-y-8 gap-x-4 text-center">
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📅</div><span class="text-[10px] text-gray-500">予定</span></div>
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">🏢</div><span class="text-[10px] text-gray-500">施設</span></div>
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">💬</div><span class="text-[10px] text-gray-500">トーク</span></div>
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">📋</div><span class="text-[10px] text-gray-500">掲示板</span></div>
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">✉️</div><span class="text-[10px] text-gray-500">メール</span></div>
+                <div class="flex flex-col items-center"><div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-2">⌚</div><span class="text-[10px] text-gray-500">勤怠</span></div>
+            </main>
+        </div>
+
+        <div id="admin" class="page">
+            <header class="p-6 text-center">
+                <h1 class="text-xl font-bold text-gray-800">管理者パネル</h1>
+                <button onclick="logout()" class="text-xs text-red-400 mt-2">ログアウト</button>
+            </header>
+            <main class="px-4 pb-10 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold mb-4 text-blue-600">👤 新規ユーザー登録</h3>
+                    <input id="new-email" type="email" placeholder="メール" class="w-full p-3 rounded-xl bg-gray-50 mb-3 border-none">
+                    <input id="new-pass" type="password" placeholder="パスワード" class="w-full p-3 rounded-xl bg-gray-50 mb-3 border-none">
+                    <button onclick="registerUser()" class="w-full bg-blue-500 text-white py-3 rounded-xl font-bold text-sm">ユーザーを追加</button>
                 </div>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border">
-                <h2 class="font-bold mb-4 text-green-600">📅 スケジュール追加</h2>
-                <div class="space-y-4 text-sm">
-                    <input type="text" placeholder="予定の内容" class="w-full border p-3 rounded-xl bg-gray-50">
-                    <input type="time" class="w-full border p-3 rounded-xl bg-gray-50">
-                    <button class="w-full bg-green-500 text-white py-3 rounded-xl font-bold">更新する</button>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold mb-4 text-green-600">📅 スケジュール追加</h3>
+                    <input id="task-title" type="text" placeholder="予定内容" class="w-full p-3 rounded-xl bg-gray-50 mb-3 border-none">
+                    <input id="task-time" type="time" class="w-full p-3 rounded-xl bg-gray-50 mb-3 border-none">
+                    <button onclick="addSchedule()" class="w-full bg-green-500 text-white py-3 rounded-xl font-bold text-sm">スケジュール更新</button>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
+
+        <nav class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t flex justify-around py-3">
+            <button onclick="changePage('home')" id="nav-home" class="nav-item active flex flex-col items-center"><i class="fa-solid fa-house text-xl"></i><span class="text-[10px] mt-1">トップ</span></button>
+            <button onclick="changePage('notif')" id="nav-notif" class="nav-item flex flex-col items-center text-gray-400 relative">
+                <i class="fa-regular fa-bell text-xl"></i><span class="absolute top-0 right-0 bg-red-500 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">!</span>
+                <span class="text-[10px] mt-1">通知</span>
+            </button>
+            <button onclick="changePage('apps')" id="nav-apps" class="nav-item flex flex-col items-center text-gray-400"><i class="fa-solid fa-grip text-xl"></i><span class="text-[10px] mt-1">アプリ</span></button>
+            <button onclick="changePage('admin')" id="nav-admin" class="nav-item flex flex-col items-center text-gray-400"><i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] mt-1">設定</span></button>
+        </nav>
     </div>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-3 shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
-        <button onclick="changePage('home')" id="nav-home" class="nav-item active flex flex-col items-center">
-            <i class="fa-solid fa-house text-xl"></i><span class="text-[10px] mt-1">トップ</span>
-        </button>
-        <button onclick="changePage('notif')" id="nav-notif" class="nav-item flex flex-col items-center relative text-gray-400">
-            <i class="fa-regular fa-bell text-xl"></i>
-            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">4</span>
-            <span class="text-[10px] mt-1">通知</span>
-        </button>
-        <button onclick="changePage('apps')" id="nav-apps" class="nav-item flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-grip text-xl"></i><span class="text-[10px] mt-1">アプリ</span>
-        </button>
-        <button onclick="changePage('admin')" id="nav-admin" class="nav-item flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] mt-1">設定</span>
-        </button>
-    </nav>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    <script>
-        function changePage(pageId) {
-            // 全ページを非表示
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMvqyVMzkDdfDcIbvkor3Jx6bcpG0-ltk",
+            authDomain: "k-gate-net.firebaseapp.com",
+            databaseURL: "https://k-gate-net-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "k-gate-net",
+            appId: "1:565714655736:web:4e40ee03ec2b6f042c5e0d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        // --- 認証機能 ---
+        window.mailLogin = () => {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("ログイン失敗: " + e.message));
+        };
+        window.googleLogin = () => signInWithPopup(auth, provider);
+        window.logout = () => signOut(auth);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-page').classList.remove('active');
+                document.getElementById('main-content').classList.remove('hidden');
+                syncData();
+            } else {
+                document.getElementById('login-page').classList.add('active');
+                document.getElementById('main-content').classList.add('hidden');
+            }
+        });
+
+        // --- ページ切り替え ---
+        window.changePage = (id) => {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // 選択ページを表示
-            document.getElementById(pageId).classList.add('active');
-            
-            // ナビボタンの色をリセット
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active', 'text-blue-500');
-                item.classList.add('text-gray-400');
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => {
+                n.classList.remove('text-blue-500'); n.classList.add('text-gray-400');
             });
-            // 選択したナビを青くする
-            const activeNav = document.getElementById('nav-' + pageId);
-            activeNav.classList.add('active', 'text-blue-500');
-            activeNav.classList.remove('text-gray-400');
+            document.getElementById('nav-'+id).classList.add('text-blue-500');
+            window.scrollTo(0,0);
+        };
 
-            // ページ上部へスクロール
-            window.scrollTo(0, 0);
+        // --- データ追加 ---
+        window.addSchedule = () => {
+            const title = document.getElementById('task-title').value;
+            const time = document.getElementById('task-time').value;
+            if(!title || !time) return alert("入力してください");
+            push(ref(db, 'schedules'), { title, time });
+            alert("スケジュールを追加しました！");
+            document.getElementById('task-title').value = "";
+        };
+
+        window.registerUser = () => {
+            const email = document.getElementById('new-email').value;
+            const pass = document.getElementById('new-pass').value;
+            createUserWithEmailAndPassword(auth, email, pass).then(() => alert("ユーザーを作成しました")).catch(e => alert(e.message));
+        };
+
+        // --- リアルタイム同期 ---
+        function syncData() {
+            // スケジュール同期
+            onValue(ref(db, 'schedules'), (snap) => {
+                const list = document.getElementById('schedule-list');
+                list.innerHTML = "";
+                snap.forEach(child => {
+                    const d = child.val();
+                    list.innerHTML += `
+                        <div class="border-l-4 border-green-400 pl-3 flex justify-between items-center py-1">
+                            <div class="text-[10px] text-gray-400 w-16">${d.time}<br><span class="bg-green-100 text-green-600 px-1 rounded">タスク</span></div>
+                            <div class="text-sm font-medium flex-1 pl-2">${d.title}</div>
+                            <i class="fa-solid fa-arrows-rotate text-gray-200 text-xs"></i>
+                        </div>`;
+                });
+            });
+
+            // 連絡事項の初期値（ここもDB化可能）
+            document.getElementById('top-info').innerText = "今月の売上目標達成率 72%（毎朝更新）残り 6営業日！チームプレーで頑張りましょう！";
         }
     </script>
 </body>
